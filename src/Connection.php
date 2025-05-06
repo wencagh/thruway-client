@@ -44,10 +44,11 @@ class Connection implements EventEmitterInterface
      * Constructor
      *
      * @param array $options
-     * @param \React\EventLoop\LoopInterface $loop
+     * @param \React\EventLoop\LoopInterface|null $loop
+     * @param ConnectorInterface|null $connector
      * @throws \Exception
      */
-    public function __construct(Array $options, LoopInterface $loop = null, ConnectorInterface $connector = null)
+    public function __construct(Array $options, ?LoopInterface $loop = null, ?ConnectorInterface $connector = null)
     {
         $this->options = $options;
         $this->client  = new Client($options['realm'], $loop);

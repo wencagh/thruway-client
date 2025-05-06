@@ -129,9 +129,9 @@ class Client implements EventEmitterInterface, ClientInterface
      * Constructor
      *
      * @param string $realm
-     * @param \React\EventLoop\LoopInterface $loop
+     * @param \React\EventLoop\LoopInterface|null $loop
      */
-    public function __construct($realm, LoopInterface $loop = null)
+    public function __construct($realm, ?LoopInterface $loop = null)
     {
         Utils::checkPrecision();
 
