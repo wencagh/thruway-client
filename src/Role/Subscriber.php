@@ -141,7 +141,7 @@ class Subscriber extends AbstractRole
             if (isset($subscription['unsubscribed_request_id']) && $subscription['unsubscribed_request_id'] === $msg->getRequestId()) {
                 /* @var $deferred \React\Promise\Deferred */
                 $deferred = $subscription['unsubscribed_deferred'];
-                $deferred->resolve();
+                $deferred->resolve(null);
 
                 unset($this->subscriptions[$key]);
                 return;

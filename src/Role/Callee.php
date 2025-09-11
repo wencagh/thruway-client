@@ -103,7 +103,7 @@ class Callee extends AbstractRole
                 if ($this->registrations[$key]['futureResult'] instanceof Deferred) {
                     /* @var $futureResult \React\Promise\Deferred */
                     $futureResult = $this->registrations[$key]['futureResult'];
-                    $futureResult->resolve();
+                    $futureResult->resolve(null);
                 }
 
                 return;
@@ -124,7 +124,7 @@ class Callee extends AbstractRole
                 if ($registration["unregister_request_id"] == $msg->getRequestId()) {
                     /** @var $deferred \React\Promise\Deferred */
                     $deferred = $registration['unregister_deferred'];
-                    $deferred->resolve();
+                    $deferred->resolve(null);
 
                     unset($this->registrations[$key]);
 
