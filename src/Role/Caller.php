@@ -12,6 +12,7 @@ use Thruway\Message\CancelMessage;
 use Thruway\Message\ErrorMessage;
 use Thruway\Message\Message;
 use Thruway\Message\ResultMessage;
+use Thruway\WampErrorException;
 use React\Promise\Deferred;
 
 /**
@@ -106,7 +107,7 @@ class Caller extends AbstractRole
                 if (isset($this->callRequests[$msg->getRequestId()])) {
                     /* @var $futureResult Deferred */
                     $futureResult = $this->callRequests[$msg->getRequestId()]['future_result'];
-                    $futureResult->reject($msg);
+                    $futureResult->reject(new WampErrorException($msg->getArguments()[0]));
                     unset($this->callRequests[$msg->getRequestId()]);
                 }
                 break;

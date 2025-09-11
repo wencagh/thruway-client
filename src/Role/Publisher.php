@@ -9,6 +9,7 @@ use Thruway\Message\ErrorMessage;
 use Thruway\Message\Message;
 use Thruway\Message\PublishedMessage;
 use Thruway\Message\PublishMessage;
+use Thruway\WampErrorException;
 use React\Promise\Deferred;
 
 /**
@@ -89,7 +90,7 @@ class Publisher extends AbstractRole
         if (isset($this->publishRequests[$msg->getRequestId()])) {
             /* @var $futureResult Deferred */
             $futureResult = $this->publishRequests[$msg->getRequestId()]['future_result'];
-            $futureResult->reject($msg);
+            $futureResult->reject(new WampErrorException($msg->getArguments()[0]));
             unset($this->publishRequests[$msg->getRequestId()]);
         }
     }

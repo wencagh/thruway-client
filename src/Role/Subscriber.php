@@ -14,6 +14,7 @@ use Thruway\Message\Message;
 use Thruway\Message\SubscribedMessage;
 use Thruway\Message\SubscribeMessage;
 use Thruway\Message\UnsubscribedMessage;
+use Thruway\WampErrorException;
 
 /**
  * Class Subscriber
@@ -103,7 +104,7 @@ class Subscriber extends AbstractRole
         foreach ($this->subscriptions as $key => $subscription) {
             if ($subscription['request_id'] === $msg->getErrorRequestId()) {
                 // reject the promise
-                $this->subscriptions[$key]['deferred']->reject($msg);
+                $this->subscriptions[$key]['deferred']->reject(new WampErrorException($msg->getArguments()[0]));
 
                 unset($this->subscriptions[$key]);
                 break;

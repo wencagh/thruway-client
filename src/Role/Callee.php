@@ -323,7 +323,7 @@ class Callee extends AbstractRole
             if ($registration['request_id'] === $msg->getRequestId()) {
                 /** @var Deferred $deferred */
                 $deferred = $registration['futureResult'];
-                $deferred->reject($msg);
+                $deferred->reject(new WampErrorException($msg->getArguments()[0]));
                 unset($this->registrations[$key]);
                 break;
             }
@@ -343,7 +343,7 @@ class Callee extends AbstractRole
                 if ($registration['unregister_request_id'] === $msg->getRequestId()) {
                     /** @var Deferred $deferred */
                     $deferred = $registration['unregister_deferred'];
-                    $deferred->reject($msg);
+                    $deferred->reject(new WampErrorException($msg->getArguments()[0]));
 
                     // I guess we get rid of the registration now?
                     unset($this->registrations[$key]);
@@ -457,7 +457,7 @@ class Callee extends AbstractRole
             Logger::error($this, 'Registration ID is not set while attempting to unregister '.$Uri);
 
             // reject the pending registration
-            $registration['futureResult']->reject();
+            $registration['futureResult']->reject(new WampErrorException('Registration ID is not set while attempting to unregister '.$Uri));
 
             // TODO: need to figure out what to do in this off chance
             // We should still probably return a promise here that just rejects
