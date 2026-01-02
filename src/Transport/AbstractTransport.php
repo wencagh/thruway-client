@@ -34,7 +34,7 @@ abstract class AbstractTransport implements TransportInterface
      */
     public function isTrusted()
     {
-        return (boolean)$this->trusted;
+        return (bool)$this->trusted;
     }
 
     /**
